@@ -1,0 +1,1 @@
+La base de datos se encuentra en BD con el cual se debe de crear con el nombre examen y importarla
