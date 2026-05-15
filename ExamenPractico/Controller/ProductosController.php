@@ -4,61 +4,139 @@ include __DIR__ . "/../Model/ProductosModel.php";
 
 $modelo = new ProductoModelo();
 
+// GUARDAR
 if(isset($_POST['guardar'])){
+
     $nombre = trim($_POST['nombre']);
     $cantidad = trim($_POST['cantidad']);
     $tipo = trim($_POST['tipo']);
 
-    // VALIDACIONES
-
     if(empty($nombre) || empty($cantidad) || empty($tipo)){
 
-        echo "Todos los campos son obligatorios";
+        echo "
+        <script>
+            alert('Todos los campos son obligatorios');
+            window.history.back();
+        </script>
+        ";
+
         exit();
     }
 
     if(!is_numeric($cantidad)){
 
-        echo "La cantidad debe ser numerica";
+        echo "
+        <script>
+            alert('La cantidad debe ser numérica');
+            window.history.back();
+        </script>
+        ";
+
         exit();
     }
 
     if($cantidad <= 0){
 
-        echo "La cantidad debe ser mayor a 0";
+        echo "
+        <script>
+            alert('La cantidad debe ser mayor a 0');
+            window.history.back();
+        </script>
+        ";
+
         exit();
     }
 
-    $modelo->insertar($nombre,$cantidad,$tipo);
+    $resultado = $modelo->insertar($nombre,$cantidad,$tipo);
 
-    header("Location: ../View/CatalogoProductos/index.php");
+    if($resultado){
+
+        echo "
+        <script>
+            alert('Producto agregado correctamente');
+            window.location='../View/CatalogoProductos/index.php';
+        </script>
+        ";
+
+    }else{
+
+        echo "
+        <script>
+            alert('Error al guardar');
+            window.history.back();
+        </script>
+        ";
+    }
 }
 
+// ELIMINAR
 if(isset($_GET['eliminar'])){
 
     $id = $_GET['eliminar'];
 
-    $modelo->eliminar($id);
+    $resultado = $modelo->eliminar($id);
 
-    header("Location: ../View/CatalogoProductos/index.php");
+    if($resultado){
+
+        echo "
+        <script>
+            alert('Producto eliminado correctamente');
+            window.location='../View/CatalogoProductos/index.php';
+        </script>
+        ";
+
+    }else{
+
+        echo "
+        <script>
+            alert('Error al eliminar');
+            window.location='../View/CatalogoProductos/index.php';
+        </script>
+        ";
+    }
 }
 
+// ACTUALIZAR
 if(isset($_POST['actualizar'])){
 
     $id = $_POST['id'];
+
     $nombre = trim($_POST['nombre']);
     $cantidad = trim($_POST['cantidad']);
     $tipo = trim($_POST['tipo']);
 
     if(empty($nombre) || empty($cantidad) || empty($tipo)){
 
-        echo "Todos los campos son obligatorios";
+        echo "
+        <script>
+            alert('Todos los campos son obligatorios');
+            window.history.back();
+        </script>
+        ";
+
         exit();
     }
 
-    $modelo->actualizar($id,$nombre,$cantidad,$tipo);
+    $resultado = $modelo->actualizar($id,$nombre,$cantidad,$tipo);
 
-    header("Location: ../View/CatalogoProductos/index.php");
+    if($resultado){
+
+        echo "
+        <script>
+            alert('Producto actualizado correctamente');
+            window.location='../View/CatalogoProductos/index.php';
+        </script>
+        ";
+
+    }else{
+
+        echo "
+        <script>
+            alert('Error al actualizar');
+            window.history.back();
+        </script>
+        ";
+    }
 }
 
 ?>
