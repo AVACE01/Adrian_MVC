@@ -1,9 +1,11 @@
 <?php
 include __DIR__ . "/../Config/conexion.php";
 
-class TiposModel{
+class TiposModel
+{
 
-    public function mostrar(){
+    public function mostrar()
+    {
 
         global $conexion;
 
@@ -12,7 +14,8 @@ class TiposModel{
         return $conexion->query($sql);
     }
 
-    public function insertar($nombre){
+    public function insertar($nombre)
+    {
 
         global $conexion;
 
@@ -22,17 +25,25 @@ class TiposModel{
         return $conexion->query($sql);
     }
 
-    public function eliminar($id){
+    public function eliminar($id)
+    {
 
         global $conexion;
 
         $sql = "DELETE FROM tipos_producto
-                WHERE id_tipo='$id'";
+            WHERE id_tipo='$id'";
 
-        return $conexion->query($sql);
+        try {
+
+            return $conexion->query($sql);
+        } catch (mysqli_sql_exception $e) {
+
+            return false;
+        }
     }
 
-    public function buscar($id){
+    public function buscar($id)
+    {
 
         global $conexion;
 
@@ -42,7 +53,8 @@ class TiposModel{
         return $conexion->query($sql);
     }
 
-    public function actualizar($id,$nombre){
+    public function actualizar($id, $nombre)
+    {
 
         global $conexion;
 
@@ -53,4 +65,3 @@ class TiposModel{
         return $conexion->query($sql);
     }
 }
-?>
